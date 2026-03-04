@@ -22,17 +22,25 @@ def show_popup(title, message):
 class CosplayView(BoxLayout):
 
     def __init__(self, **kwargs):
-        super().__init__(orientation='vertical', padding=12, spacing=8, **kwargs)
+        super().__init__(orientation='vertical', **kwargs)
         repo = ParticipanteRepository()
         repo.criar_tabela()
         self.presenter = CosplayPresenter(view=self, repo=repo)
         self._build_ui()
 
     def _build_ui(self):
+        # Layout interno que cresce conforme conteúdo
+        inner = BoxLayout(
+            orientation='vertical',
+            padding=12,
+            spacing=8,
+            size_hint_y=None
+        )
+        inner.bind(minimum_height=inner.setter('height'))
         # Nome
-        self.add_widget(Label(text='Nome do participante:', size_hint=(1, None), height=28))
+        inner.add_widget(Label(text='Nome do participante:', size_hint=(1, None), height=28))
         self.nome_input = TextInput(hint_text='Nome', multiline=False, size_hint=(1, None), height=42)
-        self.add_widget(self.nome_input)
+        inner.add_widget(self.nome_input)
 
         # Notas por critério (3 juízes cada)
         self.campos_notas = []
@@ -48,7 +56,7 @@ class CosplayView(BoxLayout):
                 )
                 row.add_widget(inp)
                 self.campos_notas.append(inp)
-            self.add_widget(row)
+            inner.add_widget(row)
 
         # Botões principais
         btn_row = BoxLayout(orientation='horizontal', size_hint=(1, None), height=48, spacing=6)
@@ -56,7 +64,7 @@ class CosplayView(BoxLayout):
             btn = Button(text=text)
             btn.bind(on_press=action)
             btn_row.add_widget(btn)
-        self.add_widget(btn_row)
+        inner.add_widget(btn_row)
 
         # Exclusão individual
         del_row = BoxLayout(orientation='horizontal', size_hint=(1, None), height=44, spacing=6)
@@ -65,13 +73,18 @@ class CosplayView(BoxLayout):
         btn_del.bind(on_press=self.on_excluir_individual)
         del_row.add_widget(self.excluir_input)
         del_row.add_widget(btn_del)
-        self.add_widget(del_row)
+        inner.add_widget(del_row)
 
         # Excluir todos
         btn_todos = Button(text='Excluir Todos', size_hint=(1, None), height=44)
         btn_todos.bind(on_press=self.on_confirmar_excluir_todos)
-        self.add_widget(btn_todos)
-        self.add_widget(Widget(size_hint_y=1))
+        inner.add_widget(btn_todos)
+
+        # ScrollView envolve tudo
+        scroll = ScrollView(size_hint=(1, 1))
+        scroll.add_widget(inner)
+        self.add_widget(scroll)
+        
 
     # ===================== EVENTOS =====================
 
