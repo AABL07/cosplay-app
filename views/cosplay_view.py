@@ -7,6 +7,8 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
 from repository.participante_repo import ParticipanteRepository
 from presenter.cosplay_presenter import CosplayPresenter
+from kivy.core.window import Window
+
 
 
 def show_popup(title, message):
