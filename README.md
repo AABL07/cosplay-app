@@ -58,7 +58,7 @@ git clone https://github.com/seu-usuario/cosplay_app.git
 cd cosplay_app
 buildozer android debug
 ```
-O APK será gerado em bin/.
+**O APK será gerado em bin/.**
 
 Instalar no celular via ADB
 ```bash
@@ -71,9 +71,9 @@ adb install bin/*.apk
 
 📋 Pré-requisitos Android
 
-Android 8.0 (API 26) ou superior
+- Android 8.0 (API 26) ou superior
 
-Habilitar "Fontes desconhecidas" para instalar o APK
+- Habilitar "Fontes desconhecidas" para instalar o APK
 
 🖥️ Desenvolvimento
 
@@ -101,4 +101,5 @@ Para editar o projeto, recomenda-se usar o VS Code com a extensão Remote - WSL:
 
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
-Desenvolvido com ❤️ para a comunidade de cosplay 🎭
+
+Desenvolvido para a comunidade de cosplay 🎭
